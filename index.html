@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Costo de Producción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #da7911;
+        }
+        
+        table th {
+            background-color: #da7911;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #da7911;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estado de Costo de Producción</h1>
+    <table>
+        <tr>
+            <th>Concepto</th>
+            <th>Valor</th>
+        </tr>
+        <tr>
+            <td>Consumo Material directo</td>
+            <td><input type="number" id="materialDirecto"></td>
+        </tr>
+        <tr>
+            <td>Consumo de obra directa</td>
+            <td><input type="number" id="obraDirecta"></td>
+        </tr>
+        <tr>
+            <td>Costos indirectos de Fabricación</td>
+            <td><input type="number" id="costosIndirectos"></td>
+        </tr>
+        <tr>
+            <td>Costo de producción del periodo</td>
+            <td id="costoProduccionPeriodo"></td>
+        </tr>
+        <tr>
+            <td>Invent. Inicial de trabajo en proceso</td>
+            <td><input type="number" id="inventarioInicial"></td>
+        </tr>
+        <tr>
+            <td>Costo de producción acumulada</td>
+            <td id="costoProduccionAcumulada"></td>
+        </tr>
+        <tr>
+            <td>Invent. Final de trabajo en proceso</td>
+            <td><input type="number" id="inventarioFinal"></td>
+        </tr>
+        <tr>
+            <td>Costo de producción terminada</td>
+            <td id="costoProduccionTerminada"></td>
+        </tr>
+        <tr>
+            <td>Invent. Inicial de mercancias terminadas</td>
+            <td><input type="number" id="inventarioInicialMercancias"></td>
+        </tr>
+        <tr>
+            <td>Costo de producción disponible para la venta</td>
+            <td id="costoProduccionVenta"></td>
+        </tr>
+        <tr>
+            <td>Invent. Final de mercancias terminadas</td>
+            <td><input type="number" id="inventarioFinalMercancias"></td>
+        </tr>
+        <tr>
+            <td>Costo de produccion terminada y vendida</td>
+            <td id="costoProduccionVendida"></td>
+        </tr>
+        <tr>
+            <td>Costos de distribución</td>
+            <td id="costosDistribucion"></td>
+        </tr>
+        <tr>
+            <td>Gastos De Administración</td>
+            <td><input type="number" id="gastosAdministracion"></td>
+        </tr>
+        <tr>
+            <td>Gastos De Ventas</td>
+            <td><input type="number" id="gastosVentas"></td>
+        </tr>
+        <tr>
+            <td>Costo total</td>
+            <td id="costoTotal"></td>
+        </tr>
+        <tr>
+            <td>Utilidad</td>
+            <td><input type="number" id="utilidad"></td>
+        </tr>
+        <tr>
+            <td>Valor Venta</td>
+            <td id="valorVenta"></td>
+        </tr>
+    </table>
+    
+    <input type="submit" value="Calcular" onclick="calcularCostoProduccion()">
+    
+    <script>
+        function calcularCostoProduccion() {
+            var materialDirecto = parseFloat(document.getElementById("materialDirecto").value);
+            var obraDirecta = parseFloat(document.getElementById("obraDirecta").value);
+            var costosIndirectos = parseFloat(document.getElementById("costosIndirectos").value);
+            var inventarioInicial = parseFloat(document.getElementById("inventarioInicial").value);
+            var inventarioFinal = parseFloat(document.getElementById("inventarioFinal").value);
+            var inventarioInicialMercancias = parseFloat(document.getElementById("inventarioInicialMercancias").value);
+            var inventarioFinalMercancias = parseFloat(document.getElementById("inventarioFinalMercancias").value);
+            var gastosAdministracion = parseFloat(document.getElementById("gastosAdministracion").value);
+            var gastosVentas = parseFloat(document.getElementById("gastosVentas").value);
+            var utilidad = parseFloat(document.getElementById("utilidad").value);
+            
+            var costoProduccionPeriodo = materialDirecto + obraDirecta + costosIndirectos;
+            var costoProduccionAcumulada = costoProduccionPeriodo + inventarioInicial;
+            var costoProduccionTerminada = costoProduccionAcumulada - inventarioFinal;
+            var costoProduccionVenta = inventarioInicialMercancias + costoProduccionTerminada;
+            var costoProduccionVendida = costoProduccionVenta - inventarioFinalMercancias;
+            var costosDistribucion = gastosAdministracion + gastosVentas;
+            var costoTotal = costoProduccionVendida + costosDistribucion;
+            var valorVenta = costoTotal + utilidad;
+            
+            document.getElementById("costoProduccionPeriodo").textContent = costoProduccionPeriodo.toFixed(2);
+            document.getElementById("costoProduccionAcumulada").textContent = costoProduccionAcumulada.toFixed(2);
+            document.getElementById("costoProduccionTerminada").textContent = costoProduccionTerminada.toFixed(2);
+            document.getElementById("costoProduccionVenta").textContent = costoProduccionVenta.toFixed(2);
+            document.getElementById("costoProduccionVendida").textContent = costoProduccionVendida.toFixed(2);
+            document.getElementById("costosDistribucion").textContent = costosDistribucion.toFixed(2);
+            document.getElementById("costoTotal").textContent = costoTotal.toFixed(2);
+            document.getElementById("valorVenta").textContent = valorVenta.toFixed(2);
+        }
+    </script>
+</body>
+</html>
